@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if tarefa %}Editar{% else %}Novo{% endif %} - Tarefas{% endblock %}
+
+{% block page_title %}{% if tarefa %}Editar{% else %}Novo{% endif %} Tarefas{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0">
+            <i class="bi bi-check2-square"></i>
+            {% if tarefa %}Editar{% else %}Cadastrar{% endif %}
+        </h5>
+    </div>
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            
+                <div class="mb-3">
+                    <label for="responsavel" class="form-label">Responsável </label>
+                    <input type="text" class="form-control" id="responsavel" name="responsavel"
+                           value=""
+                           >
+                </div>
+            
+                <div class="mb-3">
+                    <label for="status" class="form-label">Status</label>
+                    <select class="form-select" id="status" name="status" >
+                        <option value="">Selecione...</option>
+                        <option value="Pendente">Pendente</option><option value="Em Andamento">Em Andamento</option><option value="Concluída">Concluída</option>
+                    </select>
+                </div>
+            
+                <div class="mb-3">
+                    <label for="prioridade" class="form-label">Prioridade</label>
+                    <select class="form-select" id="prioridade" name="prioridade" >
+                        <option value="">Selecione...</option>
+                        <option value="Baixa">Baixa</option><option value="Média">Média</option><option value="Alta">Alta</option>
+                    </select>
+                </div>
+            
+                <div class="mb-3">
+                    <label for="descricao" class="form-label">Descrição</label>
+                    <textarea class="form-control" id="descricao" name="descricao" rows="3"
+                           ></textarea>
+                </div>
+            
+                <div class="mb-3">
+                    <label for="id_projeto" class="form-label">Projeto</label>
+                    <select class="form-select" id="id_projeto" name="id_projeto" >
+                        <option value="">Selecione...</option>
+                    </select>
+                </div>
+            
+            <hr>
+            <div class="d-flex justify-content-between">
+                <a href="{% url 'tarefa_list' %}" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i> Voltar
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-check-circle"></i> Salvar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

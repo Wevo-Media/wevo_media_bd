@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if cliente %}Editar{% else %}Novo{% endif %} - Clientes{% endblock %}
+
+{% block page_title %}{% if cliente %}Editar{% else %}Novo{% endif %} Clientes{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0">
+            <i class="bi bi-person-check"></i>
+            {% if cliente %}Editar{% else %}Cadastrar{% endif %}
+        </h5>
+    </div>
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            
+                <div class="mb-3">
+                    <label for="nome" class="form-label">Nome *</label>
+                    <input type="text" class="form-control" id="nome" name="nome"
+                           value=""
+                           required>
+                </div>
+            
+                <div class="mb-3">
+                    <label for="cpf" class="form-label">CPF </label>
+                    <input type="text" class="form-control" id="cpf" name="cpf"
+                           value=""
+                           >
+                </div>
+            
+                <div class="mb-3">
+                    <label for="telefone" class="form-label">Telefone </label>
+                    <input type="text" class="form-control" id="telefone" name="telefone"
+                           value=""
+                           >
+                </div>
+            
+                <div class="mb-3">
+                    <label for="email" class="form-label">E-mail </label>
+                    <input type="email" class="form-control" id="email" name="email"
+                           value=""
+                           >
+                </div>
+            
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="plano_ativo" name="plano_ativo">
+                    <label class="form-check-label" for="plano_ativo">Plano Ativo</label>
+                </div>
+            
+                <div class="mb-3">
+                    <label for="id_lead" class="form-label">Lead Origem</label>
+                    <select class="form-select" id="id_lead" name="id_lead" >
+                        <option value="">Selecione...</option>
+                    </select>
+                </div>
+            
+            <hr>
+            <div class="d-flex justify-content-between">
+                <a href="{% url 'cliente_list' %}" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i> Voltar
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-check-circle"></i> Salvar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

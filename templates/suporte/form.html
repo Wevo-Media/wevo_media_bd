@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if suporte %}Editar{% else %}Novo{% endif %} - Suporte{% endblock %}
+
+{% block page_title %}{% if suporte %}Editar{% else %}Novo{% endif %} Suporte{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0">
+            <i class="bi bi-headset"></i>
+            {% if suporte %}Editar{% else %}Cadastrar{% endif %}
+        </h5>
+    </div>
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            
+                <div class="mb-3">
+                    <label for="nome_pedido" class="form-label">Nome do Pedido *</label>
+                    <input type="text" class="form-control" id="nome_pedido" name="nome_pedido"
+                           value=""
+                           required>
+                </div>
+            
+                <div class="mb-3">
+                    <label for="responsavel_solicitacao" class="form-label">Responsável </label>
+                    <input type="text" class="form-control" id="responsavel_solicitacao" name="responsavel_solicitacao"
+                           value=""
+                           >
+                </div>
+            
+                <div class="mb-3">
+                    <label for="descricao" class="form-label">Descrição</label>
+                    <textarea class="form-control" id="descricao" name="descricao" rows="3"
+                           ></textarea>
+                </div>
+            
+                <div class="mb-3">
+                    <label for="id_cliente" class="form-label">Cliente</label>
+                    <select class="form-select" id="id_cliente" name="id_cliente" required>
+                        <option value="">Selecione...</option>
+                    </select>
+                </div>
+            
+            <hr>
+            <div class="d-flex justify-content-between">
+                <a href="{% url 'suporte_list' %}" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i> Voltar
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-check-circle"></i> Salvar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

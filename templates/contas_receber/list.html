@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}Contas a Receber - Wevo Media{% endblock %}
+
+{% block page_title %}Gerenciar Contas a Receber{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0"><i class="bi bi-arrow-down-circle"></i> Lista de Contas a Receber</h5>
+        <a href="{% url 'conta_receber_create' %}" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Novo
+        </a>
+    </div>
+    <div class="card-body">
+        {% if contas_receber %}
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Id Conta Receber</th> <th>Id Cliente</th> <th>Data Recebimento</th> <th>Valor</th> <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in contas_receber %}
+                    <tr>
+                        <td>{{ item.id_conta_receber|default:'-' }}</td> <td>{{ item.id_cliente|default:'-' }}</td> <td>{{ item.data_recebimento|default:'-' }}</td> <td>{{ item.valor|default:'-' }}</td> <td>{{ item.status|default:'-' }}</td>
+                        <td>
+                            <a href="{% url 'conta_receber_update' item.pk %}" class="btn btn-sm btn-outline-primary">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            {% if request.session.usuario_perfil == 'admin' %}
+                            <a href="{% url 'conta_receber_delete' item.pk %}"
+                               class="btn btn-sm btn-outline-danger"
+                               onclick="return confirm('Tem certeza que deseja deletar?')">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="alert alert-info">
+            <i class="bi bi-info-circle"></i> Nenhum registro cadastrado ainda.
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

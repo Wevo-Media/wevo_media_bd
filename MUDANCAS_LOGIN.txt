@@ -1,0 +1,94 @@
+================================================================================
+                    SISTEMA DE LOGIN ATUALIZADO
+================================================================================
+
+MUDANÇA IMPLEMENTADA
+--------------------
+O sistema de login foi alterado de CPF + Senha para E-MAIL + Senha.
+
+Isso torna o sistema mais intuitivo e profissional, já que a maioria dos
+sistemas modernos utiliza e-mail como identificador principal.
+
+
+ARQUIVOS MODIFICADOS
+--------------------
+✓ core/auth.py              - Backend de autenticação agora usa email
+✓ core/views.py             - View de login atualizada
+✓ templates/auth/login.html - Formulário de login com campo de email
+✓ README.md                 - Documentação atualizada
+✓ GUIA_RAPIDO.md           - Guia rápido atualizado
+✓ INSTRUCOES_FINAIS.txt    - Instruções atualizadas
+✓ setup_inicial.py          - Mensagens atualizadas
+
+
+COMO FAZER LOGIN AGORA
+-----------------------
+Acesse: http://localhost:8000
+
+CREDENCIAIS DO ADMINISTRADOR:
+- E-mail: admin@wevomedia.com
+- Senha: admin123
+
+
+IMPORTANTE
+----------
+O CPF ainda é a PRIMARY KEY da tabela 'usuario' no banco de dados,
+mas agora é usado apenas para identificação interna do sistema.
+
+Para login, os usuários devem usar:
+- E-mail (campo único e obrigatório)
+- Senha
+
+
+CRIANDO NOVOS USUÁRIOS
+-----------------------
+Ao criar novos usuários pelo sistema, eles devem usar o e-mail
+cadastrado para fazer login, não o CPF.
+
+Exemplo de criação via código Python:
+
+```python
+from core.auth import criar_usuario
+
+criar_usuario(
+    cpf="12345678900",           # Identificador interno
+    nome="João Silva",
+    email="joao@example.com",    # Usado para LOGIN
+    senha="senha123",
+    perfil="normal"
+)
+```
+
+Para fazer login:
+- E-mail: joao@example.com
+- Senha: senha123
+
+
+VANTAGENS DESTA MUDANÇA
+------------------------
+✓ Mais intuitivo para os usuários
+✓ Padrão usado pela maioria dos sistemas web
+✓ E-mail é mais fácil de lembrar que CPF
+✓ Segurança mantida (e-mail é campo único)
+✓ CPF permanece como chave primária no banco
+
+
+TUDO CONTINUA FUNCIONANDO
+--------------------------
+✓ CRUD completo de todas as tabelas
+✓ Sistema de autenticação
+✓ Perfis Admin e Normal
+✓ Consultas SQL especiais
+✓ Interface visual
+
+
+TESTE O SISTEMA
+---------------
+1. Execute: python manage.py runserver
+2. Acesse: http://localhost:8000
+3. Faça login com:
+   - E-mail: admin@wevomedia.com
+   - Senha: admin123
+
+
+================================================================================

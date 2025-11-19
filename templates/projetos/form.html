@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if projeto %}Editar{% else %}Novo{% endif %} - Projetos{% endblock %}
+
+{% block page_title %}{% if projeto %}Editar{% else %}Novo{% endif %} Projetos{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0">
+            <i class="bi bi-kanban"></i>
+            {% if projeto %}Editar{% else %}Cadastrar{% endif %}
+        </h5>
+    </div>
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            
+                <div class="mb-3">
+                    <label for="nome_projeto" class="form-label">Nome do Projeto *</label>
+                    <input type="text" class="form-control" id="nome_projeto" name="nome_projeto"
+                           value=""
+                           required>
+                </div>
+            
+                <div class="mb-3">
+                    <label for="descricao" class="form-label">Descrição</label>
+                    <textarea class="form-control" id="descricao" name="descricao" rows="3"
+                           ></textarea>
+                </div>
+            
+                <div class="mb-3">
+                    <label for="status" class="form-label">Status</label>
+                    <select class="form-select" id="status" name="status" >
+                        <option value="">Selecione...</option>
+                        <option value="Em andamento">Em andamento</option><option value="Concluído">Concluído</option><option value="Pausado">Pausado</option>
+                    </select>
+                </div>
+            
+            <hr>
+            <div class="d-flex justify-content-between">
+                <a href="{% url 'projeto_list' %}" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i> Voltar
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-check-circle"></i> Salvar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

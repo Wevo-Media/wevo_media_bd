@@ -1,0 +1,655 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Wevo Media - CRM Empresarial{% endblock %}</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <!-- Google Fonts - Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #1e3a8a;
+            --primary-hover: #1e40af;
+            --secondary-color: #64748b;
+            --success-color: #10b981;
+            --danger-color: #ef4444;
+            --warning-color: #f59e0b;
+            --sidebar-bg: #0f172a;
+            --sidebar-hover: #1e293b;
+            --topbar-bg: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: #f8fafc;
+            min-height: 100vh;
+            font-size: 13px;
+        }
+
+        /* SIDEBAR ESTILO PLOOMES */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 220px;
+            background: linear-gradient(180deg, var(--sidebar-bg) 0%, #0c1428 100%);
+            color: white;
+            z-index: 1000;
+            box-shadow: 2px 0 15px rgba(0,0,0,0.15);
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background-color: rgba(255,255,255,0.2);
+            border-radius: 3px;
+        }
+
+        .sidebar-brand {
+            padding: 18px 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sidebar-brand img {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: white;
+            padding: 3px;
+            object-fit: cover;
+        }
+
+        .sidebar-brand-text {
+            font-size: 17px;
+            font-weight: 700;
+            color: white;
+            letter-spacing: -0.5px;
+        }
+
+        .sidebar-nav {
+            padding: 15px 0;
+            padding-bottom: 180px;
+        }
+
+        .nav-section-title {
+            padding: 15px 16px 8px;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .sidebar .nav-link {
+            color: rgba(255,255,255,0.75);
+            padding: 10px 16px;
+            margin: 2px 10px;
+            border-radius: 7px;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .sidebar .nav-link i {
+            font-size: 16px;
+            width: 18px;
+            text-align: center;
+        }
+
+        .sidebar .nav-link:hover {
+            background-color: var(--sidebar-hover);
+            color: white;
+            transform: translateX(2px);
+        }
+
+        .sidebar .nav-link.active {
+            background: linear-gradient(90deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        /* USER INFO NA SIDEBAR */
+        .sidebar-user {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 16px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            background: rgba(0,0,0,0.2);
+        }
+
+        .sidebar-user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .sidebar-user-avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .sidebar-user-details {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .sidebar-user-name {
+            font-weight: 600;
+            font-size: 13px;
+            color: white;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .sidebar-user-role {
+            font-size: 10px;
+            color: rgba(255,255,255,0.6);
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+
+        .btn-logout {
+            width: 100%;
+            padding: 9px;
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #fca5a5;
+            border-radius: 7px;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+        }
+
+        .btn-logout:hover {
+            background: #ef4444;
+            color: white;
+            border-color: #ef4444;
+        }
+
+        /* TOPBAR ESTILO PLOOMES */
+        .topbar {
+            position: fixed;
+            top: 0;
+            left: 220px;
+            right: 0;
+            height: 55px;
+            background: var(--topbar-bg);
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            padding: 0 24px;
+            z-index: 999;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+
+        .topbar-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #0f172a;
+            flex: 1;
+        }
+
+        .topbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .topbar-badge {
+            padding: 5px 12px;
+            border-radius: 16px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+
+        .topbar-badge.admin {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+            box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+        }
+
+        .topbar-badge.normal {
+            background: #e2e8f0;
+            color: #475569;
+        }
+
+        .topbar-user {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 16px;
+            background: #f8fafc;
+            border-radius: 10px;
+        }
+
+        .topbar-user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .topbar-user-name {
+            font-weight: 600;
+            font-size: 14px;
+            color: #0f172a;
+        }
+
+        /* MAIN CONTENT */
+        .main-content {
+            margin-left: 220px;
+            margin-top: 55px;
+            padding: 24px;
+            min-height: calc(100vh - 55px);
+        }
+
+        /* CARDS ESTILO PLOOMES */
+        .card {
+            border: none;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+            border-radius: 10px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            transition: all 0.2s;
+        }
+
+        .card:hover {
+            box-shadow: 0 4px 6px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .card-header {
+            background-color: white;
+            border-bottom: 1px solid #f1f5f9;
+            padding: 16px 20px;
+            font-weight: 600;
+            font-size: 15px;
+            color: #0f172a;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        /* BUTTONS ESTILO PLOOMES */
+        .btn {
+            padding: 9px 16px;
+            border-radius: 7px;
+            font-weight: 500;
+            font-size: 13px;
+            transition: all 0.2s;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+            color: white;
+            box-shadow: 0 2px 8px rgba(30, 58, 138, 0.25);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(30, 58, 138, 0.35);
+            background: linear-gradient(135deg, var(--primary-hover) 0%, #1e3a8a 100%);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+        }
+
+        /* TABLES */
+        .table {
+            font-size: 13px;
+        }
+
+        .table thead th {
+            font-weight: 600;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            color: #64748b;
+            border-bottom: 2px solid #e2e8f0;
+            padding: 10px 14px;
+        }
+
+        .table tbody td {
+            padding: 12px 14px;
+            vertical-align: middle;
+        }
+
+        /* MESSAGES */
+        .alert {
+            border: none;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-bottom: 16px;
+            font-size: 13px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        /* LOGIN PAGE */
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+
+        .login-card {
+            max-width: 480px;
+            width: 100%;
+        }
+
+        .login-logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 24px;
+            background: white;
+            border-radius: 16px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .sidebar {
+                left: -220px;
+                transition: left 0.3s;
+            }
+
+            .sidebar.show {
+                left: 0;
+            }
+
+            .topbar, .main-content {
+                margin-left: 0;
+                left: 0;
+            }
+        }
+
+        /* Ajustes para telas médias */
+        @media (min-width: 769px) and (max-width: 1366px) {
+            body {
+                font-size: 12px;
+            }
+
+            .main-content {
+                padding: 20px;
+            }
+        }
+
+        /* Ajustes para telas grandes */
+        @media (min-width: 1920px) {
+            .main-content {
+                padding: 28px;
+            }
+        }
+    </style>
+
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    {% if request.session.usuario_cpf %}
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <div class="sidebar-brand">
+            <img src="{% static 'iconWevo.jpg' %}" alt="Wevo Media">
+            <div class="sidebar-brand-text">Wevo Media</div>
+        </div>
+
+        <div class="sidebar-nav">
+            <a class="nav-link {% if request.path == '/dashboard/' %}active{% endif %}" href="{% url 'dashboard' %}">
+                <i class="bi bi-speedometer2"></i> Dashboard
+            </a>
+
+            <div class="nav-section-title">Gestão de Vendas</div>
+
+            <a class="nav-link {% if 'leads' in request.path %}active{% endif %}" href="{% url 'lead_list' %}">
+                <i class="bi bi-people"></i> Leads
+            </a>
+            <a class="nav-link {% if 'clientes' in request.path %}active{% endif %}" href="{% url 'cliente_list' %}">
+                <i class="bi bi-person-check"></i> Clientes
+            </a>
+            <a class="nav-link {% if 'suporte' in request.path %}active{% endif %}" href="{% url 'suporte_list' %}">
+                <i class="bi bi-headset"></i> Suporte
+            </a>
+
+            <div class="nav-section-title">Projetos</div>
+
+            <a class="nav-link {% if 'projetos' in request.path %}active{% endif %}" href="{% url 'projeto_list' %}">
+                <i class="bi bi-kanban"></i> Projetos
+            </a>
+            <a class="nav-link {% if 'tarefas' in request.path %}active{% endif %}" href="{% url 'tarefa_list' %}">
+                <i class="bi bi-check2-square"></i> Tarefas
+            </a>
+
+            <div class="nav-section-title">Financeiro</div>
+
+            <a class="nav-link {% if 'contratos' in request.path %}active{% endif %}" href="{% url 'contrato_list' %}">
+                <i class="bi bi-file-earmark-text"></i> Contratos
+            </a>
+            <a class="nav-link {% if 'financeiro' in request.path and 'contas' not in request.path %}active{% endif %}" href="{% url 'financeiro_list' %}">
+                <i class="bi bi-cash-stack"></i> Financeiro
+            </a>
+            <a class="nav-link {% if 'contas-pagar' in request.path %}active{% endif %}" href="{% url 'conta_pagar_list' %}">
+                <i class="bi bi-arrow-up-circle"></i> Contas a Pagar
+            </a>
+            <a class="nav-link {% if 'contas-receber' in request.path %}active{% endif %}" href="{% url 'conta_receber_list' %}">
+                <i class="bi bi-arrow-down-circle"></i> Contas a Receber
+            </a>
+
+            <div class="nav-section-title">Inteligência</div>
+
+            <a class="nav-link {% if 'consultas' in request.path %}active{% endif %}" href="{% url 'queries_menu' %}">
+                <i class="bi bi-graph-up"></i> Relatórios
+            </a>
+
+            {% if request.session.usuario_perfil == 'admin' %}
+            <div class="nav-section-title">Administração</div>
+            <a class="nav-link {% if 'usuarios' in request.path %}active{% endif %}" href="{% url 'usuario_list' %}">
+                <i class="bi bi-shield-check"></i> Usuários
+            </a>
+            {% endif %}
+        </div>
+
+        <div class="sidebar-user">
+            <div class="sidebar-user-info">
+                <div class="sidebar-user-avatar">
+                    {{ request.session.usuario_nome|first|upper }}
+                </div>
+                <div class="sidebar-user-details">
+                    <div class="sidebar-user-name">{{ request.session.usuario_nome }}</div>
+                    <div class="sidebar-user-role">
+                        {% if request.session.usuario_perfil == 'admin' %}Administrador{% else %}Usuário{% endif %}
+                    </div>
+                </div>
+            </div>
+            <a href="{% url 'logout' %}" class="btn-logout">
+                <i class="bi bi-box-arrow-right"></i> Sair
+            </a>
+        </div>
+    </div>
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+        <div class="topbar-title">{% block page_title %}Dashboard{% endblock %}</div>
+        <div class="topbar-actions">
+            <span class="topbar-badge {% if request.session.usuario_perfil == 'admin' %}admin{% else %}normal{% endif %}">
+                {% if request.session.usuario_perfil == 'admin' %}
+                    <i class="bi bi-shield-check"></i> ADMIN
+                {% else %}
+                    <i class="bi bi-person"></i> USUÁRIO
+                {% endif %}
+            </span>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- MAIN CONTENT -->
+    <div class="{% if request.session.usuario_cpf %}main-content{% else %}login-container{% endif %}">
+        <!-- Messages -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Máscaras de Input Automáticas -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Função para aplicar máscara de CPF
+            function maskCPF(value) {
+                value = value.replace(/\D/g, '');
+                if (value.length <= 11) {
+                    value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                    value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                    value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+                }
+                return value;
+            }
+
+            // Função para aplicar máscara de Telefone
+            function maskPhone(value) {
+                value = value.replace(/\D/g, '');
+                if (value.length <= 11) {
+                    if (value.length <= 10) {
+                        // (XX) XXXX-XXXX
+                        value = value.replace(/^(\d{2})(\d{4})(\d{0,4}).*/, '($1) $2-$3');
+                    } else {
+                        // (XX) XXXXX-XXXX
+                        value = value.replace(/^(\d{2})(\d{5})(\d{0,4}).*/, '($1) $2-$3');
+                    }
+                }
+                return value;
+            }
+
+            // Função para aplicar máscara de CEP
+            function maskCEP(value) {
+                value = value.replace(/\D/g, '');
+                if (value.length <= 8) {
+                    value = value.replace(/^(\d{5})(\d{0,3}).*/, '$1-$2');
+                }
+                return value;
+            }
+
+            // Aplicar máscaras em todos os inputs relevantes
+            const inputs = document.querySelectorAll('input[type="text"], input[type="tel"]');
+
+            inputs.forEach(input => {
+                const name = input.name.toLowerCase();
+                const id = input.id.toLowerCase();
+                const placeholder = input.placeholder.toLowerCase();
+
+                // Máscara de CPF
+                if (name.includes('cpf') || id.includes('cpf') || placeholder.includes('cpf')) {
+                    input.maxLength = 14;
+                    input.addEventListener('input', function(e) {
+                        e.target.value = maskCPF(e.target.value);
+                    });
+                }
+
+                // Máscara de Telefone
+                if (name.includes('telefone') || name.includes('celular') || name.includes('phone') ||
+                    id.includes('telefone') || id.includes('celular') || id.includes('phone') ||
+                    placeholder.includes('telefone') || placeholder.includes('celular') || placeholder.includes('phone')) {
+                    input.maxLength = 15;
+                    input.addEventListener('input', function(e) {
+                        e.target.value = maskPhone(e.target.value);
+                    });
+                }
+
+                // Máscara de CEP
+                if (name.includes('cep') || id.includes('cep') || placeholder.includes('cep')) {
+                    input.maxLength = 9;
+                    input.addEventListener('input', function(e) {
+                        e.target.value = maskCEP(e.target.value);
+                    });
+                }
+            });
+
+            // Normalizar emails (lowercase)
+            const emailInputs = document.querySelectorAll('input[type="email"]');
+            emailInputs.forEach(input => {
+                input.addEventListener('blur', function(e) {
+                    e.target.value = e.target.value.trim().toLowerCase();
+                });
+            });
+        });
+    </script>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

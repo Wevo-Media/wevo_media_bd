@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}Financeiro - Wevo Media{% endblock %}
+
+{% block page_title %}Gerenciar Financeiro{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0"><i class="bi bi-cash-stack"></i> Lista de Financeiro</h5>
+        <a href="{% url 'financeiro_create' %}" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Novo
+        </a>
+    </div>
+    <div class="card-body">
+        {% if financeiro %}
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Id Financeiro</th> <th>Descricao</th> <th>Valor</th> <th>Tipo</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in financeiro %}
+                    <tr>
+                        <td>{{ item.id_financeiro|default:'-' }}</td> <td>{{ item.descricao|default:'-' }}</td> <td>{{ item.valor|default:'-' }}</td> <td>{{ item.tipo|default:'-' }}</td>
+                        <td>
+                            <a href="{% url 'financeiro_update' item.id_financeiro %}" class="btn btn-sm btn-outline-primary">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            {% if request.session.usuario_perfil == 'admin' %}
+                            <a href="{% url 'financeiro_delete' item.id_financeiro %}"
+                               class="btn btn-sm btn-outline-danger"
+                               onclick="return confirm('Tem certeza que deseja deletar?')">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="alert alert-info">
+            <i class="bi bi-info-circle"></i> Nenhum registro cadastrado ainda.
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - Wevo Media{% endblock %}
+
+{% block page_title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="row">
+    <!-- Estatísticas -->
+    <div class="col-md-3 mb-4">
+        <div class="card bg-primary text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="mb-0">Total de Leads</h6>
+                        <h2 class="mb-0">{{ total_leads }}</h2>
+                    </div>
+                    <i class="bi bi-people" style="font-size: 3rem; opacity: 0.3;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-4">
+        <div class="card bg-success text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="mb-0">Total de Clientes</h6>
+                        <h2 class="mb-0">{{ total_clientes }}</h2>
+                    </div>
+                    <i class="bi bi-person-check" style="font-size: 3rem; opacity: 0.3;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-4">
+        <div class="card bg-info text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="mb-0">Projetos Ativos</h6>
+                        <h2 class="mb-0">{{ total_projetos }}</h2>
+                    </div>
+                    <i class="bi bi-kanban" style="font-size: 3rem; opacity: 0.3;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-4">
+        <div class="card bg-warning text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="mb-0">Tarefas</h6>
+                        <h2 class="mb-0">{{ total_tarefas }}</h2>
+                    </div>
+                    <i class="bi bi-check2-square" style="font-size: 3rem; opacity: 0.3;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Menu de Acesso Rápido -->
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-grid"></i> Acesso Rápido</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <a href="{% url 'lead_create' %}" class="btn btn-outline-primary w-100">
+                            <i class="bi bi-plus-circle"></i><br>Novo Lead
+                        </a>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <a href="{% url 'cliente_create' %}" class="btn btn-outline-success w-100">
+                            <i class="bi bi-plus-circle"></i><br>Novo Cliente
+                        </a>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <a href="{% url 'suporte_create' %}" class="btn btn-outline-info w-100">
+                            <i class="bi bi-plus-circle"></i><br>Novo Chamado
+                        </a>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <a href="{% url 'projeto_create' %}" class="btn btn-outline-warning w-100">
+                            <i class="bi bi-plus-circle"></i><br>Novo Projeto
+                        </a>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <a href="{% url 'tarefa_create' %}" class="btn btn-outline-secondary w-100">
+                            <i class="bi bi-plus-circle"></i><br>Nova Tarefa
+                        </a>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <a href="{% url 'queries_menu' %}" class="btn btn-outline-dark w-100">
+                            <i class="bi bi-bar-chart"></i><br>Consultas
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Informações do Usuário -->
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-person-circle"></i> Seu Perfil</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Nome:</strong> {{ usuario_nome }}</p>
+                <p><strong>Perfil:</strong>
+                    <span class="badge {% if usuario_perfil == 'admin' %}bg-danger{% else %}bg-success{% endif %}">
+                        {{ usuario_perfil|upper }}
+                    </span>
+                </p>
+                <hr>
+                <p class="text-muted small mb-0">
+                    <i class="bi bi-info-circle"></i>
+                    {% if usuario_perfil == 'admin' %}
+                        Você tem acesso total ao sistema, incluindo gestão de usuários.
+                    {% else %}
+                        Você tem acesso às funcionalidades básicas do sistema.
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

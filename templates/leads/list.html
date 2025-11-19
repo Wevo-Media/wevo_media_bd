@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %}Leads - Wevo Media{% endblock %}
+
+{% block page_title %}Gerenciar Leads{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0"><i class="bi bi-people"></i> Lista de Leads</h5>
+        <a href="{% url 'lead_create' %}" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Novo Lead
+        </a>
+    </div>
+    <div class="card-body">
+        {% if leads %}
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Telefone</th>
+                        <th>E-mail</th>
+                        <th>Origem</th>
+                        <th>Status</th>
+                        <th>CPF</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for lead in leads %}
+                    <tr>
+                        <td>{{ lead.id_lead }}</td>
+                        <td>{{ lead.nome }}</td>
+                        <td>{{ lead.telefone|default:"-" }}</td>
+                        <td>{{ lead.email|default:"-" }}</td>
+                        <td>{{ lead.origem|default:"-" }}</td>
+                        <td>
+                            <span class="badge bg-info">{{ lead.status_funil|default:"Novo" }}</span>
+                        </td>
+                        <td>{{ lead.cpf|default:"-" }}</td>
+                        <td>
+                            <a href="{% url 'lead_update' lead.id_lead %}" class="btn btn-sm btn-outline-primary">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            {% if request.session.usuario_perfil == 'admin' %}
+                            <a href="{% url 'lead_delete' lead.id_lead %}"
+                               class="btn btn-sm btn-outline-danger"
+                               onclick="return confirm('Tem certeza que deseja deletar este lead?')">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="alert alert-info">
+            <i class="bi bi-info-circle"></i> Nenhum lead cadastrado ainda.
+            <a href="{% url 'lead_create' %}" class="alert-link">Cadastre o primeiro lead aqui</a>.
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

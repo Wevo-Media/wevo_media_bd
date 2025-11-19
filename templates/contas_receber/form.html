@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if contas_receber %}Editar{% else %}Novo{% endif %} - Contas a Receber{% endblock %}
+
+{% block page_title %}{% if contas_receber %}Editar{% else %}Novo{% endif %} Contas a Receber{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0">
+            <i class="bi bi-arrow-down-circle"></i>
+            {% if contas_receber %}Editar{% else %}Cadastrar{% endif %}
+        </h5>
+    </div>
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            
+                <div class="mb-3">
+                    <label for="data_recebimento" class="form-label">Data Recebimento </label>
+                    <input type="date" class="form-control" id="data_recebimento" name="data_recebimento"
+                           value=""
+                           >
+                </div>
+            
+                <div class="mb-3">
+                    <label for="valor" class="form-label">Valor *</label>
+                    <input type="number" class="form-control" id="valor" name="valor"
+                           value=""
+                           required>
+                </div>
+            
+                <div class="mb-3">
+                    <label for="descricao" class="form-label">Descrição</label>
+                    <textarea class="form-control" id="descricao" name="descricao" rows="3"
+                           ></textarea>
+                </div>
+            
+                <div class="mb-3">
+                    <label for="id_cliente" class="form-label">Cliente</label>
+                    <select class="form-select" id="id_cliente" name="id_cliente" >
+                        <option value="">Selecione...</option>
+                    </select>
+                </div>
+            
+                <div class="mb-3">
+                    <label for="status" class="form-label">Status</label>
+                    <select class="form-select" id="status" name="status" >
+                        <option value="">Selecione...</option>
+                        <option value="Pendente">Pendente</option><option value="Recebido">Recebido</option><option value="Atrasado">Atrasado</option>
+                    </select>
+                </div>
+            
+            <hr>
+            <div class="d-flex justify-content-between">
+                <a href="{% url 'contas_receber_list' %}" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i> Voltar
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-check-circle"></i> Salvar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

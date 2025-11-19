@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if lead %}Editar{% else %}Novo{% endif %} Lead - Wevo Media{% endblock %}
+
+{% block page_title %}{% if lead %}Editar{% else %}Novo{% endif %} Lead{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0">
+            <i class="bi bi-{% if lead %}pencil{% else %}plus-circle{% endif %}"></i>
+            {% if lead %}Editar Lead{% else %}Cadastrar Novo Lead{% endif %}
+        </h5>
+    </div>
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="nome" class="form-label">Nome *</label>
+                    <input type="text" class="form-control" id="nome" name="nome"
+                           value="{{ lead.nome|default:'' }}" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="cpf" class="form-label">CPF</label>
+                    <input type="text" class="form-control" id="cpf" name="cpf"
+                           value="{{ lead.cpf|default:'' }}" placeholder="000.000.000-00">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="telefone" class="form-label">Telefone</label>
+                    <input type="text" class="form-control" id="telefone" name="telefone"
+                           value="{{ lead.telefone|default:'' }}" placeholder="(00) 00000-0000">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="email" class="form-label">E-mail</label>
+                    <input type="email" class="form-control" id="email" name="email"
+                           value="{{ lead.email|default:'' }}">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="origem" class="form-label">Origem</label>
+                    <select class="form-select" id="origem" name="origem">
+                        <option value="">Selecione...</option>
+                        <option value="Instagram" {% if lead.origem == 'Instagram' %}selected{% endif %}>Instagram</option>
+                        <option value="Facebook" {% if lead.origem == 'Facebook' %}selected{% endif %}>Facebook</option>
+                        <option value="LinkedIn" {% if lead.origem == 'LinkedIn' %}selected{% endif %}>LinkedIn</option>
+                        <option value="Google Ads" {% if lead.origem == 'Google Ads' %}selected{% endif %}>Google Ads</option>
+                        <option value="Indicação" {% if lead.origem == 'Indicação' %}selected{% endif %}>Indicação</option>
+                        <option value="Outro" {% if lead.origem == 'Outro' %}selected{% endif %}>Outro</option>
+                    </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="status_funil" class="form-label">Status no Funil</label>
+                    <select class="form-select" id="status_funil" name="status_funil">
+                        <option value="">Selecione...</option>
+                        <option value="Novo" {% if lead.status_funil == 'Novo' %}selected{% endif %}>Novo</option>
+                        <option value="Contato Realizado" {% if lead.status_funil == 'Contato Realizado' %}selected{% endif %}>Contato Realizado</option>
+                        <option value="Proposta Enviada" {% if lead.status_funil == 'Proposta Enviada' %}selected{% endif %}>Proposta Enviada</option>
+                        <option value="Negociação" {% if lead.status_funil == 'Negociação' %}selected{% endif %}>Negociação</option>
+                        <option value="Fechado" {% if lead.status_funil == 'Fechado' %}selected{% endif %}>Fechado</option>
+                        <option value="Perdido" {% if lead.status_funil == 'Perdido' %}selected{% endif %}>Perdido</option>
+                    </select>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="d-flex justify-content-between">
+                <a href="{% url 'lead_list' %}" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i> Voltar
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-check-circle"></i> Salvar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

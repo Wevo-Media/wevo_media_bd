@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if contrato %}Editar{% else %}Novo{% endif %} - Contratos{% endblock %}
+
+{% block page_title %}{% if contrato %}Editar{% else %}Novo{% endif %} Contratos{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0">
+            <i class="bi bi-file-earmark-text"></i>
+            {% if contrato %}Editar{% else %}Cadastrar{% endif %}
+        </h5>
+    </div>
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            
+                <div class="mb-3">
+                    <label for="data_inicio" class="form-label">Data Início *</label>
+                    <input type="date" class="form-control" id="data_inicio" name="data_inicio"
+                           value=""
+                           required>
+                </div>
+            
+                <div class="mb-3">
+                    <label for="data_termino" class="form-label">Data Término </label>
+                    <input type="date" class="form-control" id="data_termino" name="data_termino"
+                           value=""
+                           >
+                </div>
+            
+                <div class="mb-3">
+                    <label for="valor" class="form-label">Valor *</label>
+                    <input type="number" class="form-control" id="valor" name="valor"
+                           value=""
+                           required>
+                </div>
+            
+                <div class="mb-3">
+                    <label for="status" class="form-label">Status</label>
+                    <select class="form-select" id="status" name="status" >
+                        <option value="">Selecione...</option>
+                        <option value="Ativo">Ativo</option><option value="Inativo">Inativo</option><option value="Cancelado">Cancelado</option>
+                    </select>
+                </div>
+            
+                <div class="mb-3">
+                    <label for="cpf_responsavel" class="form-label">Responsável</label>
+                    <select class="form-select" id="cpf_responsavel" name="cpf_responsavel" >
+                        <option value="">Selecione...</option>
+                    </select>
+                </div>
+            
+            <hr>
+            <div class="d-flex justify-content-between">
+                <a href="{% url 'contrato_list' %}" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i> Voltar
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-check-circle"></i> Salvar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

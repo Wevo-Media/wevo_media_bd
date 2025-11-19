@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if item %}Editar{% else %}Novo{% endif %} - Usuários{% endblock %}
+
+{% block page_title %}{% if item %}Editar{% else %}Novo{% endif %} Usuários{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0">
+            <i class="bi bi-person-gear"></i>
+            {% if item %}Editar{% else %}Cadastrar{% endif %}
+        </h5>
+    </div>
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            
+                <div class="mb-3">
+                    <label for="cpf" class="form-label">CPF *</label>
+                    <input type="text" class="form-control" id="cpf" name="cpf"
+                           value=""
+                           required>
+                </div>
+            
+                <div class="mb-3">
+                    <label for="nome" class="form-label">Nome *</label>
+                    <input type="text" class="form-control" id="nome" name="nome"
+                           value=""
+                           required>
+                </div>
+            
+                <div class="mb-3">
+                    <label for="email" class="form-label">E-mail *</label>
+                    <input type="email" class="form-control" id="email" name="email"
+                           value=""
+                           required>
+                </div>
+            
+                <div class="mb-3">
+                    <label for="senha" class="form-label">Senha *</label>
+                    <input type="password" class="form-control" id="senha" name="senha"
+                           value=""
+                           required>
+                </div>
+            
+                <div class="mb-3">
+                    <label for="perfil" class="form-label">Perfil</label>
+                    <select class="form-select" id="perfil" name="perfil" >
+                        <option value="">Selecione...</option>
+                        <option value="admin">admin</option><option value="normal">normal</option>
+                    </select>
+                </div>
+            
+            <hr>
+            <div class="d-flex justify-content-between">
+                <a href="{% url 'usuario_list' %}" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i> Voltar
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-check-circle"></i> Salvar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

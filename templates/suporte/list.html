@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}Suporte - Wevo Media{% endblock %}
+
+{% block page_title %}Gerenciar Suporte{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0"><i class="bi bi-headset"></i> Lista de Suporte</h5>
+        <a href="{% url 'suporte_create' %}" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Novo
+        </a>
+    </div>
+    <div class="card-body">
+        {% if suporte %}
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Id Chamado</th> <th>Nome Pedido</th> <th>Responsavel Solicitacao</th> <th>Id Cliente</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in suporte %}
+                    <tr>
+                        <td>{{ item.id_chamado|default:'-' }}</td> <td>{{ item.nome_pedido|default:'-' }}</td> <td>{{ item.responsavel_solicitacao|default:'-' }}</td> <td>{{ item.id_cliente|default:'-' }}</td>
+                        <td>
+                            <a href="{% url 'suporte_update' item.id_suporte %}" class="btn btn-sm btn-outline-primary">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            {% if request.session.usuario_perfil == 'admin' %}
+                            <a href="{% url 'suporte_delete' item.id_suporte %}"
+                               class="btn btn-sm btn-outline-danger"
+                               onclick="return confirm('Tem certeza que deseja deletar?')">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="alert alert-info">
+            <i class="bi bi-info-circle"></i> Nenhum registro cadastrado ainda.
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

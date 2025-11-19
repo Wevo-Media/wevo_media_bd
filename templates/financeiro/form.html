@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if financeiro %}Editar{% else %}Novo{% endif %} - Financeiro{% endblock %}
+
+{% block page_title %}{% if financeiro %}Editar{% else %}Novo{% endif %} Financeiro{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0">
+            <i class="bi bi-cash-stack"></i>
+            {% if financeiro %}Editar{% else %}Cadastrar{% endif %}
+        </h5>
+    </div>
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            
+                <div class="mb-3">
+                    <label for="descricao" class="form-label">Descrição </label>
+                    <input type="text" class="form-control" id="descricao" name="descricao"
+                           value=""
+                           >
+                </div>
+            
+                <div class="mb-3">
+                    <label for="valor" class="form-label">Valor *</label>
+                    <input type="number" class="form-control" id="valor" name="valor"
+                           value=""
+                           required>
+                </div>
+            
+                <div class="mb-3">
+                    <label for="tipo" class="form-label">Tipo</label>
+                    <select class="form-select" id="tipo" name="tipo" required>
+                        <option value="">Selecione...</option>
+                        <option value="Receita">Receita</option><option value="Despesa">Despesa</option>
+                    </select>
+                </div>
+            
+                <div class="mb-3">
+                    <label for="id_projeto" class="form-label">Projeto</label>
+                    <select class="form-select" id="id_projeto" name="id_projeto" >
+                        <option value="">Selecione...</option>
+                    </select>
+                </div>
+            
+            <hr>
+            <div class="d-flex justify-content-between">
+                <a href="{% url 'financeiro_list' %}" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i> Voltar
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-check-circle"></i> Salvar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

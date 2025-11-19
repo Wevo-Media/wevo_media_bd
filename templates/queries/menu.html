@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}Consultas Especiais - Wevo Media{% endblock %}
+
+{% block page_title %}Consultas Especiais{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0"><i class="bi bi-bar-chart"></i> Relatórios e Consultas Avançadas</h5>
+    </div>
+    <div class="card-body">
+        <p class="text-muted">
+            Estas consultas demonstram recursos avançados de SQL, incluindo:
+            SELECT aninhado, funções de grupo (COUNT, SUM, AVG, MAX, MIN) e
+            operadores de conjunto (UNION, INTERSECT).
+        </p>
+
+        <div class="row mt-4">
+            {% for consulta in consultas %}
+            <div class="col-md-6 mb-4">
+                <div class="card h-100 border-primary">
+                    <div class="card-header bg-primary text-white">
+                        <h6 class="mb-0">{{ consulta.titulo }}</h6>
+                    </div>
+                    <div class="card-body">
+                        <p class="mb-2">
+                            <span class="badge bg-info">{{ consulta.tipo }}</span>
+                        </p>
+                        <p class="text-muted small">{{ consulta.descricao }}</p>
+                        <a href="{% url consulta.url %}" class="btn btn-outline-primary btn-sm">
+                            <i class="bi bi-eye"></i> Visualizar Resultados
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<div class="mt-4 card">
+    <div class="card-header">
+        <h5 class="mb-0"><i class="bi bi-info-circle"></i> Sobre as Consultas</h5>
+    </div>
+    <div class="card-body">
+        <h6>1. SELECT Aninhado</h6>
+        <p class="small text-muted">
+            Consultas que utilizam subconsultas (subqueries) para filtrar ou agregar dados
+            baseados em resultados de outras consultas.
+        </p>
+
+        <h6>2. Funções de Grupo</h6>
+        <p class="small text-muted">
+            Utiliza funções agregadas como COUNT, SUM, AVG, MAX, MIN para realizar
+            cálculos e estatísticas sobre conjuntos de dados.
+        </p>
+
+        <h6>3. Operadores de Conjunto</h6>
+        <p class="small text-muted">
+            Combina resultados de múltiplas consultas usando operadores como UNION,
+            INTERSECT e EXCEPT.
+        </p>
+    </div>
+</div>
+{% endblock %}
