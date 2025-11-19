@@ -11,7 +11,12 @@
       "Bash(requirements.txt)",
       "Bash(dir /b Procfile runtime.txt 2)",
       "Bash(del Procfile runtime.txt)",
-      "Bash(dir:*)"
+      "Bash(dir:*)",
+      "Bash(pip uninstall:*)",
+      "Bash(pip install:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push)"
     ],
     "deny": [],
     "ask": []
