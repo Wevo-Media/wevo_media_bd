@@ -40,6 +40,11 @@
                     <label for="id_cliente" class="form-label">Cliente</label>
                     <select class="form-select" id="id_cliente" name="id_cliente" required>
                         <option value="">Selecione...</option>
+                        {% for cliente in clientes %}
+                        <option value="{{ cliente.id_cliente }}" {% if chamado.id_cliente.id_cliente == cliente.id_cliente %}selected{% endif %}>
+                            {{ cliente.nome }} - {{ cliente.cpf|default:"Sem CPF" }}
+                        </option>
+                        {% endfor %}
                     </select>
                 </div>
             

@@ -13,7 +13,7 @@
         </a>
     </div>
     <div class="card-body">
-        {% if suporte %}
+        {% if chamados %}
         <div class="table-responsive">
             <table class="table table-hover">
                 <thead>
@@ -23,15 +23,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for item in suporte %}
+                    {% for item in chamados %}
                     <tr>
                         <td>{{ item.id_chamado|default:'-' }}</td> <td>{{ item.nome_pedido|default:'-' }}</td> <td>{{ item.responsavel_solicitacao|default:'-' }}</td> <td>{{ item.id_cliente|default:'-' }}</td>
                         <td>
-                            <a href="{% url 'suporte_update' item.id_suporte %}" class="btn btn-sm btn-outline-primary">
+                            <a href="{% url 'suporte_update' item.id_chamado %}" class="btn btn-sm btn-outline-primary">
                                 <i class="bi bi-pencil"></i>
                             </a>
                             {% if request.session.usuario_perfil == 'admin' %}
-                            <a href="{% url 'suporte_delete' item.id_suporte %}"
+                            <a href="{% url 'suporte_delete' item.id_chamado %}"
                                class="btn btn-sm btn-outline-danger"
                                onclick="return confirm('Tem certeza que deseja deletar?')">
                                 <i class="bi bi-trash"></i>

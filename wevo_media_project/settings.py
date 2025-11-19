@@ -5,6 +5,7 @@ Django settings for wevo_media_project project.
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+from decouple import config
 
 load_dotenv()
 
@@ -132,3 +133,55 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'dashboard'
 LOGOUT_REDIRECT_URL = 'login'
+
+# ============================================================================
+# CONFIGURAÇÕES DE PRODUÇÃO
+# ============================================================================
+
+# Permitir uso de variáveis de ambiente para configurações críticas
+SECRET_KEY = os.getenv('SECRET_KEY', SECRET_KEY)
+DEBUG = os.getenv('DEBUG', 'True') == 'True'
+
+# Hosts permitidos
+if not DEBUG:
+    ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '*').split(',')
+
+# WhiteNoise para servir arquivos estáticos em produção
+if 'whitenoise' in os.getenv('INSTALLED_APPS', ''):
+    MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Segurança em produção
+if not DEBUG:
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    X_FRAME_OPTIONS = 'DENY'
+
+# SECURITY
+DEBUG = config('DEBUG', default=False, cast=bool)
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='*').split(',')
+SECRET_KEY = config('SECRET_KEY', default='sua-chave-secreta-aqui')
+
+# Database para produção
+if not DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': config('DB_NAME'),
+            'USER': config('DB_USER'),
+            'PASSWORD': config('DB_PASSWORD'),
+            'HOST': config('DB_HOST'),
+            'PORT': config('DB_PORT', default='5432'),
+        }
+    }
+
+# Static files
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# WhiteNoise
+MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')

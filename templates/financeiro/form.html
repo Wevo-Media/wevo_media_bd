@@ -42,6 +42,11 @@
                     <label for="id_projeto" class="form-label">Projeto</label>
                     <select class="form-select" id="id_projeto" name="id_projeto" >
                         <option value="">Selecione...</option>
+                        {% for projeto in projetos %}
+                        <option value="{{ projeto.id_projeto }}" {% if financeiro.id_projeto.id_projeto == projeto.id_projeto %}selected{% endif %}>
+                            {{ projeto.nome_projeto }}
+                        </option>
+                        {% endfor %}
                     </select>
                 </div>
             

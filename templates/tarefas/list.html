@@ -27,11 +27,11 @@
                     <tr>
                         <td>{{ item.id_tarefas|default:'-' }}</td> <td>{{ item.responsavel|default:'-' }}</td> <td>{{ item.status|default:'-' }}</td> <td>{{ item.prioridade|default:'-' }}</td>
                         <td>
-                            <a href="{% url 'tarefa_update' item.id_tarefa %}" class="btn btn-sm btn-outline-primary">
+                            <a href="{% url 'tarefa_update' item.id_tarefas %}" class="btn btn-sm btn-outline-primary">
                                 <i class="bi bi-pencil"></i>
                             </a>
                             {% if request.session.usuario_perfil == 'admin' %}
-                            <a href="{% url 'tarefa_delete' item.id_tarefa %}"
+                            <a href="{% url 'tarefa_delete' item.id_tarefas %}"
                                class="btn btn-sm btn-outline-danger"
                                onclick="return confirm('Tem certeza que deseja deletar?')">
                                 <i class="bi bi-trash"></i>

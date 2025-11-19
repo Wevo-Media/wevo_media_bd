@@ -13,7 +13,7 @@
         </a>
     </div>
     <div class="card-body">
-        {% if contas_pagar %}
+        {% if contas %}
         <div class="table-responsive">
             <table class="table table-hover">
                 <thead>
@@ -23,7 +23,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for item in contas_pagar %}
+                    {% for item in contas %}
                     <tr>
                         <td>{{ item.id_conta_pagar|default:'-' }}</td> <td>{{ item.home_beneficiada|default:'-' }}</td> <td>{{ item.data_vencimento|default:'-' }}</td> <td>{{ item.valor|default:'-' }}</td> <td>{{ item.status|default:'-' }}</td>
                         <td>

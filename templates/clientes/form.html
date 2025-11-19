@@ -19,33 +19,33 @@
                 <div class="mb-3">
                     <label for="nome" class="form-label">Nome *</label>
                     <input type="text" class="form-control" id="nome" name="nome"
-                           value=""
+                           value="{{ cliente.nome|default:'' }}"
                            required>
                 </div>
-            
+
                 <div class="mb-3">
                     <label for="cpf" class="form-label">CPF </label>
                     <input type="text" class="form-control" id="cpf" name="cpf"
-                           value=""
+                           value="{{ cliente.cpf|default:'' }}"
                            >
                 </div>
-            
+
                 <div class="mb-3">
                     <label for="telefone" class="form-label">Telefone </label>
                     <input type="text" class="form-control" id="telefone" name="telefone"
-                           value=""
+                           value="{{ cliente.telefone|default:'' }}"
                            >
                 </div>
-            
+
                 <div class="mb-3">
                     <label for="email" class="form-label">E-mail </label>
                     <input type="email" class="form-control" id="email" name="email"
-                           value=""
+                           value="{{ cliente.email|default:'' }}"
                            >
                 </div>
-            
+
                 <div class="mb-3 form-check">
-                    <input type="checkbox" class="form-check-input" id="plano_ativo" name="plano_ativo">
+                    <input type="checkbox" class="form-check-input" id="plano_ativo" name="plano_ativo" {% if cliente.plano_ativo %}checked{% endif %}>
                     <label class="form-check-label" for="plano_ativo">Plano Ativo</label>
                 </div>
             
@@ -53,6 +53,11 @@
                     <label for="id_lead" class="form-label">Lead Origem</label>
                     <select class="form-select" id="id_lead" name="id_lead" >
                         <option value="">Selecione...</option>
+                        {% for lead in leads %}
+                        <option value="{{ lead.id_lead }}" {% if cliente.id_lead.id_lead == lead.id_lead %}selected{% endif %}>
+                            {{ lead.nome }} - {{ lead.cpf|default:"Sem CPF" }}
+                        </option>
+                        {% endfor %}
                     </select>
                 </div>
             

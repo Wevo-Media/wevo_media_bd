@@ -13,7 +13,7 @@
         </a>
     </div>
     <div class="card-body">
-        {% if financeiro %}
+        {% if financeiros %}
         <div class="table-responsive">
             <table class="table table-hover">
                 <thead>
@@ -23,7 +23,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for item in financeiro %}
+                    {% for item in financeiros %}
                     <tr>
                         <td>{{ item.id_financeiro|default:'-' }}</td> <td>{{ item.descricao|default:'-' }}</td> <td>{{ item.valor|default:'-' }}</td> <td>{{ item.tipo|default:'-' }}</td>
                         <td>

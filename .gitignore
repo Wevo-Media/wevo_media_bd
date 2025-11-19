@@ -20,6 +20,8 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+popular_dados.py
+nul
 
 # Virtual Environment
 venv/
@@ -31,7 +33,6 @@ env/
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
-/static/
 /staticfiles/
 /media/
 
@@ -42,6 +43,7 @@ db.sqlite3-journal
 # IDEs
 .vscode/
 .idea/
+.claude/
 *.swp
 *.swo
 *~

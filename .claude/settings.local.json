@@ -2,7 +2,16 @@
   "permissions": {
     "allow": [
       "Bash(python generate_templates.py:*)",
-      "Bash(python manage.py runserver:*)"
+      "Bash(python manage.py runserver:*)",
+      "Bash(dir /b /s *.py 2)",
+      "Bash(nul)",
+      "Bash(findstr:*)",
+      "Bash(python:*)",
+      "Bash(pip freeze:*)",
+      "Bash(requirements.txt)",
+      "Bash(dir /b Procfile runtime.txt 2)",
+      "Bash(del Procfile runtime.txt)",
+      "Bash(dir:*)"
     ],
     "deny": [],
     "ask": []

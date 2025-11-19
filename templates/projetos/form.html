@@ -19,21 +19,23 @@
                 <div class="mb-3">
                     <label for="nome_projeto" class="form-label">Nome do Projeto *</label>
                     <input type="text" class="form-control" id="nome_projeto" name="nome_projeto"
-                           value=""
+                           value="{{ projeto.nome_projeto|default:'' }}"
                            required>
                 </div>
-            
+
                 <div class="mb-3">
                     <label for="descricao" class="form-label">Descrição</label>
-                    <textarea class="form-control" id="descricao" name="descricao" rows="3"
-                           ></textarea>
+                    <textarea class="form-control" id="descricao" name="descricao" rows="3">{{ projeto.descricao|default:'' }}</textarea>
                 </div>
-            
+
                 <div class="mb-3">
                     <label for="status" class="form-label">Status</label>
                     <select class="form-select" id="status" name="status" >
                         <option value="">Selecione...</option>
-                        <option value="Em andamento">Em andamento</option><option value="Concluído">Concluído</option><option value="Pausado">Pausado</option>
+                        <option value="Em andamento" {% if projeto.status == "Em andamento" %}selected{% endif %}>Em andamento</option>
+                        <option value="Concluído" {% if projeto.status == "Concluído" %}selected{% endif %}>Concluído</option>
+                        <option value="Pausado" {% if projeto.status == "Pausado" %}selected{% endif %}>Pausado</option>
+                        <option value="Planejamento" {% if projeto.status == "Planejamento" %}selected{% endif %}>Planejamento</option>
                     </select>
                 </div>
             
